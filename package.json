@@ -5,6 +5,9 @@
   "main": "bot.js",
   "author": "creme",
   "license": "ISC",
+  "scripts": {
+    "start": "node bot.js"
+  },
   "dependencies": {
     "deep-extend": "^0.6.0",
     "discord.js": "^11.2.1",
