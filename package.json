@@ -1,0 +1,19 @@
+{
+  "name": "cone_dev",
+  "version": "1.0.0",
+  "description": "Cone Discord Bot for testing",
+  "main": "bot.js",
+  "author": "creme",
+  "license": "ISC",
+  "dependencies": {
+    "deep-extend": "^0.6.0",
+    "discord.js": "^11.2.1",
+    "ffmpeg": "0.0.4",
+    "mysql": "^2.15.0",
+    "node-fetch": "^2.3.0",
+    "nodemon": "^1.14.7",
+    "randomatic": "^3.1.1",
+    "snekfetch": "^4.0.4",
+    "webhook-discord": "^3.1.2"
+  }
+}

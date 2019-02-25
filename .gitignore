@@ -1,0 +1,4 @@
+/node_modules/
+botsettings.json
+config.js
+/utility/dbconfig.js
