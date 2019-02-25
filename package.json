@@ -17,6 +17,6 @@
     "webhook-discord": "^3.1.2"
   },
   "engines": {
-    "node": "8.9.4"
+    "node": "10.15.1"
   }
 }
