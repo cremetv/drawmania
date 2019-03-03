@@ -9,17 +9,27 @@
     "start": "node bot.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "deep-extend": "^0.6.0",
     "discord.js": "^11.2.1",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
     "ffmpeg": "0.0.4",
     "mysql": "^2.15.0",
     "node-fetch": "^2.3.0",
-    "nodemon": "^1.14.7",
+    "nodemon": "^1.18.10",
+    "opusscript": "0.0.6",
     "randomatic": "^3.1.1",
     "snekfetch": "^4.0.4",
-    "webhook-discord": "^3.1.2"
+    "webhook-discord": "^3.1.2",
+    "ytdl-core": "^0.29.1"
   },
   "engines": {
     "node": "10.15.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.1",
+    "install": "^0.12.2",
+    "npm": "^6.8.0"
   }
 }
