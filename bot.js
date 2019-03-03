@@ -17,6 +17,17 @@ client.commands = new Discord.Collection();
 
 const logcolor = '\x1b[46m\x1b[30m%s\x1b[0m';
 
+/*
+* Websocket
+*/
+const WS = require('./web/web');
+const web = new WS('123456', 5665, client);
+
+
+/*
+* Music
+*/
+global.servers = {};
 
 /****************
 * Database Connection
@@ -213,6 +224,44 @@ client.on("message", async message => {
 ****************/
 client.on("messageReactionAdd", async (messageReaction, user) => {
 	items.itemPickup(messageReaction, user);
+});
+
+client.on('messageReactionAdd', (messageReaction, user) => {
+  if (user.bot) return;
+
+  if (!servers[messageReaction.message.guild.id]) {
+    servers[messageReaction.message.guild.id] = {
+      queue: []
+    }
+  }
+  let server = servers[messageReaction.message.guild.id];
+
+  if (messageReaction.emoji.name === 'play') {
+    console.log('play');
+    if (server.dispatcher) server.dispatcher.resume();
+    messageReaction.message.clearReactions().then(() => {
+      messageReaction.message.react(client.emojis.get('551613576435990559')).then(() => {
+        messageReaction.message.react(client.emojis.get('551613556601126918'));
+      });
+    });
+    return;
+  }
+  if (messageReaction.emoji.name === 'pause') {
+    console.log('pause');
+    if (server.dispatcher) server.dispatcher.pause();
+    messageReaction.message.clearReactions().then(() => {
+      messageReaction.message.react(client.emojis.get('551613542630162432')).then(() => {
+        messageReaction.message.react(client.emojis.get('551613556601126918'));
+      });
+    });
+    return;
+  }
+  if (messageReaction.emoji.name === 'skip') {
+    console.log('skip');
+    if (server.dispatcher) server.dispatcher.end();
+    messageReaction.message.delete();
+    return;
+  }
 });
 
 
