@@ -14,30 +14,25 @@
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
+  var socket = io();
+
   $('.send-btn').on('click', function(e) {
     e.preventDefault();
 
-    let channelID = $('#channelID').val();
-    let text = $('#text').val();
+    socket.emit('chat message', {message: $('#text').val(), channelID: $('#channelID').val()});
+    channelID
+    $('#m').val('');
+    return false;
+  });
 
-    let post_data = {
-      'channelID': channelID,
-      'text': text
-    }
+  socket.on('some event', () => {
+    console.log('asd');
+  });
 
-    $.ajax({
-      crossDomain: true,
-      method: 'POST',
-      url: '/sendMessage',
-      async: true,
-      data: post_data,
-      error: (e) => {
-        console.error(e);
-      }
-    }).done((data) => {
-      console.log('done');
-    });
-
+  socket.on('discord message', (msg) => {
+    console.log('message sent in discord!!');
+    console.log(`message: ${msg}`);
   });
 </script>

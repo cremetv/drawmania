@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const path = require('path');
+const http = require('http').Server(express);
+const io = require('socket.io')(http);
 
 class WebSocket {
   constructor(port, client) {
@@ -52,6 +54,10 @@ class WebSocket {
       if (channel) {
         channel.send(text);
       }
+    });
+
+    io.on('connection', (socket) => {
+      console.log('a user connected');
     });
 
   }
