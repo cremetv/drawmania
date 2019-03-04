@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 class WebSocket {
-  constructor(token, port, client) {
-    this.token = token;
+  constructor(port, client) {
     this.client = client;
 
     this.app = express();
@@ -27,20 +26,8 @@ class WebSocket {
     });
   }
 
-  checkToken(_token) {
-    return (_token == this.token);
-  }
-
   registerRoutes() {
-
-    // http://localhost:port/
     this.app.get('/', (req, res) => {
-      let _token = req.query.token;
-
-      if (!this.checkToken(_token)) {
-        res.render('error', {title: 'ERROR', errtype: 'INVALID TOKEN'});
-        return;
-      }
 
       let channels = [];
       this.client.guilds.first().channels
@@ -50,19 +37,15 @@ class WebSocket {
       });
 
       res.render('index', {
-        title: 'WELCOME',
-        token: _token,
+        title: 'Welcome',
         channels: channels
       });
 
     });
 
     this.app.post('/sendMessage', (req, res) => {
-      // let _token = req.body.token;
       let text = req.body.text;
       let channelID = req.body.channelID;
-
-      // if (!this.checkToken(_token)) return;
 
       let channel = this.client.guilds.first().channels.get(channelID);
 

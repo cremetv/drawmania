@@ -21,7 +21,7 @@ const logcolor = '\x1b[46m\x1b[30m%s\x1b[0m';
 * Websocket
 */
 const WS = require('./web/web');
-const web = new WS('123456', 5665, client);
+const web = new WS(5665, client);
 
 
 /*
