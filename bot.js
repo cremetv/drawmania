@@ -96,7 +96,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+  let servers = [];
   let chans = [];
+
+  client.guilds.forEach(s => {
+    servers.push({id: s.id, name: s.name});
+  });
+
   client.guilds.first().channels
   .filter(c => c.type == 'text')
   .forEach(c => {
@@ -105,8 +111,21 @@ app.get('/', (req, res) => {
 
   res.render('index', {
     title: 'Welcome',
+    servers: servers,
     channels: chans
   });
+});
+
+app.post('/getServer', (req, res) => {
+  let chans = [];
+  let serverID = req.body.serverID;
+  let server = client.guilds.get(serverID);
+  let serverChannels = server.channels.filter(c => c.type == 'text')
+  .forEach(c => {
+    chans.push({id: c.id, name: c.name});
+  });
+  res.json(chans);
+  // io.emit('server select', {chans: chans});
 });
 
 const server = http.createServer(app).listen(3000, () => {
@@ -122,7 +141,14 @@ io.sockets.on('connection', (socket) => {
   // on chat message from site
   socket.on('chat message', (data) => {
     console.log(`message: ${data.message}`);
-    console.log(`message: ${data.channelID}`);
+    console.log(`serverID: ${data.serverID}`);
+    console.log(`channeldID: ${data.channelID}`);
+    let server = client.guilds.get(data.serverID);
+    let channel = server.channels.get(data.channelID);
+
+    if (server && channel) {
+      channel.send(data.message);
+    }
 
     // emit to everyone
     io.emit('some event', { for: 'everyone' });

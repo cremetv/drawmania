@@ -1,6 +1,15 @@
-<h1>THIS IS AN INDEX FILE</h1>
+<h1>Creamy Admin Webinterface</h1>
+
+<div id="chat">
+
+</div>
 
 <div id="post">
+  <select id="serverID" name="serverID">
+    {{#each servers}}
+      <option value="{{this.id}}">{{this.name}}</option>
+    {{/each}}
+  </select>
   <select id="channelID" name="channelID">
     {{#each channels}}
       <option value="{{this.id}}">{{this.name}}</option>
@@ -18,15 +27,46 @@
 <script type="text/javascript">
   var socket = io();
 
+  // on select server get channels
+  $('#serverID').on('change', function(e) {
+    let serverID = $('#serverID').val();
+    console.log(serverID);
+
+    let post_data = {
+      'serverID': serverID.toString()
+    }
+    $.ajax({
+      crossDomain: true,
+      method: 'POST',
+      url: '/getServer',
+      async: true,
+      data: post_data,
+      error: (e) => {
+        console.error(e);
+      }
+    }).done((data) => {
+      // console.log(data);
+      $('#channelID option').remove();
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i].id);
+        $('#channelID').append(`<option value="${data[i].id}">${data[i].name}</option>`);
+      }
+    });
+  });
+
+  // send message
   $('.send-btn').on('click', function(e) {
     e.preventDefault();
 
-    socket.emit('chat message', {message: $('#text').val(), channelID: $('#channelID').val()});
+    socket.emit('chat message', {message: $('#text').val(), serverID: $('#serverID').val(), channelID: $('#channelID').val()});
     channelID
     $('#m').val('');
     return false;
   });
 
+
+
+  // testing
   socket.on('some event', () => {
     console.log('asd');
   });
@@ -34,5 +74,6 @@
   socket.on('discord message', (msg) => {
     console.log('message sent in discord!!');
     console.log(`message: ${msg}`);
+    $('#chat').append()
   });
 </script>
