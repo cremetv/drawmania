@@ -2,17 +2,28 @@
   <div class="site-title">
     Creamy Admin Webinterface
   </div>
+  <div class="server-name">
+    {{servers.0.name}}
+  </div>
 </header>
 
 
 <aside class="sidebar">
   <ul class="server-list">
-    <li class="logo online">
+    <li class="logo {{status}}">
       <a href="/">
         <img src="images/bot-logo.png" alt="Drawmania Logo">
       </a>
+      Drawmania
     </li>
     <li class="break"></li>
+    {{#each servers}}
+    <li>
+      <a href="#!" class="server" data-server="{{this.id}}" data-servername="{{this.name}}">
+        <img src="https://cdn.discordapp.com/icons/{{this.id}}/{{this.icon}}.png" alt="{{this.name}} Icon">
+      </a>
+    </li>
+    {{/each}}
   </ul>
 </aside>
 

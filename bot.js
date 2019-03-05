@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
   let chans = [];
 
   client.guilds.forEach(s => {
-    servers.push({id: s.id, name: s.name});
+    servers.push({id: s.id, name: s.name, icon: s.icon});
   });
 
   client.guilds.first().channels
@@ -54,6 +54,7 @@ app.get('/', (req, res) => {
   });
 
   res.render('index', {
+    status: 'online',
     title: 'Welcome',
     servers: servers,
     channels: chans
@@ -84,9 +85,6 @@ io.sockets.on('connection', (socket) => {
 
   // on chat message from site
   socket.on('chat message', (data) => {
-    console.log(`message: ${data.message}`);
-    console.log(`serverId: ${data.serverId}`);
-    console.log(`channeldId: ${data.channelId}`);
     let server = client.guilds.get(data.serverId);
     let channel = server.channels.get(data.channelId);
 
@@ -108,16 +106,16 @@ io.sockets.on('connection', (socket) => {
 client.on("message", async message => {
   io.emit('discord message', message.content);
 
-  if (message.mentions.users.first()) {
-    let msg = message.content;
-
-    message.mentions.users.forEach(u => {
-      console.log(u);
-      msg = msg.replace(`<@${u.id}>`, '').replace(/ +(?= )/g,'');
-    });
-
-    console.log(msg);
-  }
+  // if someone gets mentioned
+  // if (message.mentions.users.first()) {
+  //   let msg = message.content;
+  //
+  //   message.mentions.users.forEach(u => {
+  //     msg = msg.replace(`<@${u.id}>`, '').replace(/ +(?= )/g,'');
+  //   });
+  //
+  //   console.log(msg);
+  // }
 
 });
 
@@ -169,6 +167,8 @@ fs.readdir('./cmds/', (err, files) => {
 client.on('ready', async () => {
 	console.log('\x1b[32m%s\x1b[0m', `Bot is ready! ${client.user.username}`);
 	client.user.setGame(`beep boop`, "https://ice-creme.de");
+
+  io.emit('status update', { status: 'online' });
 
 	// generate invitelink
 	try {
@@ -376,6 +376,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 ****************/
 client.on("disconnected", () => {
 	console.log('offline');
+  io.emit('status update', { status: 'offline' });
   client.user.setStatus("offline");
 });
 

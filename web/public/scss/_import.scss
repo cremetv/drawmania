@@ -3,3 +3,10 @@
 @import 'base/typo';
 @import 'base/animations';
 @import 'base/base';
+
+@import 'parts/header';
+@import 'parts/sidebar';
+@import 'parts/main';
+@import 'parts/stats';
+@import 'parts/input';
+@import 'parts/user.scss';

@@ -18,11 +18,7 @@ function toggleEmojiBox() {
   }
 }
 
-// on select server get channels
-$('#serverId').on('change', function(e) {
-  let serverId = $('#serverId').val();
-  console.log(serverId);
-
+const getChannels = (serverId) => {
   let post_data = {
     'serverId': serverId.toString()
   }
@@ -39,10 +35,30 @@ $('#serverId').on('change', function(e) {
     // console.log(data);
     $('#channelId option').remove();
     for (var i = 0; i < data.length; i++) {
-      console.log(data[i].id);
       $('#channelId').append(`<option value="${data[i].id}">${data[i].name}</option>`);
     }
   });
+}
+
+// add active to first server in menu
+$('.server-list .server').first().parent('li').addClass('active');
+
+// on select server get channels
+$('#serverId').on('change', function(e) {
+  let serverId = $('#serverId').val();
+  getChannels(serverId);
+});
+
+$('.server').on('click', function(e) {
+  e.preventDefault();
+
+  $('.server').parent('li').removeClass('active');
+  $(this).parent('li').addClass('active');
+
+  let serverId = $(this).attr('data-server');
+  $('#serverId').val(serverId);
+  $('.server-name').html($(this).attr('data-servername'));
+  getChannels(serverId);
 });
 
 // send message
@@ -76,7 +92,13 @@ function sendMessage() {
   return false;
 }
 
-
+socket.on('status update', (data) => {
+  if (data.status === 'offline') {
+    $('.logo').removeClass('online').addClass('offline');
+  } else if (data.status === 'online') {
+    $('.logo').removeClass('offline').addClass('online');
+  }
+});
 
 // testing
 socket.on('some event', () => {
