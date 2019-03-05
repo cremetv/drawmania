@@ -22,6 +22,14 @@ install the dependencies
 ```
 npm install
 ```
+Go to your [Discord Applications](https://discordapp.com/developers/applications/) and create a new Application.
+Make it a bot and copy the Token.
+Create a `botsettings.js` fom the `botsettings-EXAMPLE.js` file.
+Paste your Application Token in the botsettings file.
+
+Create a Database and fill out the connection data in the `config.js`.
+
+...
 
 ## To Do:
 - music
