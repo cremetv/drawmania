@@ -32,12 +32,13 @@ npm install
 
 ## License
 
-The Drawmania Bot is licensed under the terms of the GPL Open Source
-license and is available for free.
+The Drawmania Bot is licensed under the terms of the MIT license.
 
 ## Links
 
 * [Discord.js documentation](https://discord.js.org/#/docs/main/stable/general/welcome)
+* [express](https://expressjs.com)
+* [socket.io](https://socket.io/)
 
 ---
 
