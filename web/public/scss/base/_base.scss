@@ -210,6 +210,85 @@ aside.stats {
 
   .input-bar {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .emoji-wrap {
+      position: relative;
+
+      .emoji-btn {
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        background: $light;
+        border-top-right-radius: $br;
+        border-bottom-right-radius: $br;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: background .25s $cubic;
+
+        &:hover {
+          background: lighten($light, 5%);
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 2px;
+          height: 1rem;
+          left: -1px;
+          top: 50%;
+          background: lighten($light, 10%);
+          transform: translateY(-50%);
+        }
+      }
+
+      .emoji-box {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 1rem);
+        background: $light;
+        display: none;
+
+        &.open {
+          display: block;
+        }
+
+        .emoji-list {
+          margin: 0;
+          padding: .5rem;
+          list-style: none;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          align-content: flex-start;
+          width: 9rem;
+          height: 9rem;
+
+          li {
+            width: 2rem;
+            height: 2rem;
+            transition: background .25s $cubic;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            &:hover {
+              background: rgba(0,0,0,.1);
+            }
+          }
+        }
+      }
+    }
   }
 }
 

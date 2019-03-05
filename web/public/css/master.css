@@ -467,7 +467,98 @@ aside.stats {
   .user-input .input-bar {
     -webkit-box-flex: 1;
     -ms-flex: 1;
-    flex: 1; }
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row; }
+    .user-input .input-bar input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0; }
+    .user-input .input-bar .emoji-wrap {
+      position: relative; }
+      .user-input .input-bar .emoji-wrap .emoji-btn {
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        background: #484C52;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        cursor: pointer;
+        -webkit-transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        -o-transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .user-input .input-bar .emoji-wrap .emoji-btn:hover {
+          background: #545960; }
+        .user-input .input-bar .emoji-wrap .emoji-btn:before {
+          content: '';
+          position: absolute;
+          width: 2px;
+          height: 1rem;
+          left: -1px;
+          top: 50%;
+          background: #60656d;
+          -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%); }
+      .user-input .input-bar .emoji-wrap .emoji-box {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 1rem);
+        background: #484C52;
+        display: none; }
+        .user-input .input-bar .emoji-wrap .emoji-box.open {
+          display: block; }
+        .user-input .input-bar .emoji-wrap .emoji-box .emoji-list {
+          margin: 0;
+          padding: .5rem;
+          list-style: none;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          -webkit-box-pack: start;
+          -ms-flex-pack: start;
+          justify-content: flex-start;
+          -ms-flex-line-pack: start;
+          align-content: flex-start;
+          width: 9rem;
+          height: 9rem; }
+          .user-input .input-bar .emoji-wrap .emoji-box .emoji-list li {
+            width: 2rem;
+            height: 2rem;
+            -webkit-transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            -o-transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            cursor: pointer; }
+            .user-input .input-bar .emoji-wrap .emoji-box .emoji-list li:hover {
+              background: rgba(0, 0, 0, 0.1); }
 
 /*
 * General Styles

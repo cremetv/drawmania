@@ -23,6 +23,24 @@ $(function () {
 
 var socket = io();
 
+// emoji box
+var emojiOpen = false;
+$('.emoji-btn').on('click', toggleEmojiBox);
+$('.emoji-list li').on('click', function () {
+  // add emoji to input
+  toggleEmojiBox();
+});
+
+function toggleEmojiBox() {
+  if (emojiOpen) {
+    $('.emoji-box').removeClass('open');
+    emojiOpen = false;
+  } else {
+    $('.emoji-box').addClass('open');
+    emojiOpen = true;
+  }
+}
+
 // on select server get channels
 $('#serverId').on('change', function (e) {
   var serverId = $('#serverId').val();
@@ -65,6 +83,7 @@ $('#input').on('keyup', function (e) {
 });
 
 function sendMessage() {
+  if ($('#input').val() == '') return;
   socket.emit('chat message', { message: $('#input').val(), serverId: $('#serverId').val(), channelId: $('#channelId').val() });
   var message = "\n  <div class=\"message\">\n    <div class=\"message__details\">sent to --> <span class=\"message__channel\">" + $('#serverId option:selected').text() + " : " + $('#channelId option:selected').text() + "</span></div>\n    <div class=\"message__text\">\n      " + $('#input').val() + "\n    </div>\n  </div>\n  ";
   $('#chat').append(message);
