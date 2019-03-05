@@ -33,11 +33,14 @@ Create a Database and fill out the connection data in the `config.js`.
 ...
 
 ## To Do:
+### Bot
 - music
   - reaction control
 - webinterface
 - ...
 
+### Webinterface
+- customize select fields
 
 ## License
 

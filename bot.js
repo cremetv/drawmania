@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 app.post('/getServer', (req, res) => {
   // get all channels for the selected server
   let chans = [];
-  let server = client.guilds.get(req.body.serverID);
+  let server = client.guilds.get(req.body.serverId);
   let serverChannels = server.channels.filter(c => c.type == 'text')
   .forEach(c => {
     chans.push({id: c.id, name: c.name});
@@ -85,10 +85,10 @@ io.sockets.on('connection', (socket) => {
   // on chat message from site
   socket.on('chat message', (data) => {
     console.log(`message: ${data.message}`);
-    console.log(`serverID: ${data.serverID}`);
-    console.log(`channeldID: ${data.channelID}`);
-    let server = client.guilds.get(data.serverID);
-    let channel = server.channels.get(data.channelID);
+    console.log(`serverId: ${data.serverId}`);
+    console.log(`channeldId: ${data.channelId}`);
+    let server = client.guilds.get(data.serverId);
+    let channel = server.channels.get(data.channelId);
 
     if (server && channel) {
       channel.send(data.message);

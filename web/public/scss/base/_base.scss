@@ -1,0 +1,152 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid:
+  "sidebar header header header" 3rem
+  "sidebar main main stats" 1fr
+  "sidebar main main stats" 1fr
+  "user input input stats" 4rem
+  / 70px 1fr 1fr 200px ;
+}
+
+header {
+  grid-area: header;
+  background: $main;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid $dark;
+
+  .site-title {
+    color: lighten($typo, 20%);
+    font-weight: $fw-normal;
+  }
+}
+
+aside.server-list {
+  grid-area: sidebar;
+  background: $dark;
+}
+
+main {
+  grid-area: main;
+  background: $main;
+  padding: 2rem;
+}
+
+aside.stats {
+  grid-area: stats;
+  background: $shade;
+}
+
+.user-profile {
+  grid-area: user;
+  background: $dark;
+}
+
+.user-input {
+  grid-area: input;
+  background: $shade;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+
+  > div {
+    + div {
+      margin-left: 2rem;
+    }
+  }
+
+  .selection {
+    display: flex;
+    flex-direction: row;
+
+    .option {
+
+      + .option {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .input-bar {
+    flex: 1;
+  }
+}
+
+
+/*
+* General Styles
+*/
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: darken($shade, 4%);
+  border: 1px solid $dark;
+  border-radius: $br;
+  color: lighten($typo, 10%);
+  transition: background .25s $cubic;
+  height: 2rem;
+  padding: 0 1rem;
+  font-size: .8rem;
+  font-weight: $fw-normal;
+
+  &:hover {
+    background: darken($shade, 2%);
+  }
+
+  &:active {
+    background: darken($shade, 6%);
+  }
+}
+
+select {
+  background: $main;
+  border-radius: $br;
+  border: 1px solid $dark;
+  height: 2rem;
+  padding: 0 .5rem;
+
+  &:active, &:focus {
+    outline: none;
+  }
+}
+
+input[type='text'] {
+  background: $light;
+  height: 2rem;
+  border: none;
+  border-radius: $br;
+  color: lighten($typo, 10%);
+  padding: 0 1rem;
+  width: 100%;
+  font-size: .8rem;
+
+  &::placeholder {
+    color: $typo;
+  }
+
+  &:active, &:focus {
+    outline: none;
+  }
+}

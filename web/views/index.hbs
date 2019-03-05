@@ -1,79 +1,51 @@
-<h1>Creamy Admin Webinterface</h1>
+<header>
+  <div class="site-title">
+    Creamy Admin Webinterface
+  </div>
+</header>
 
-<div id="chat">
+<aside class="server-list">
+
+</aside>
+
+<main>
+  <div id="chat" class="chat">
+
+  </div>
+</main>
+
+<aside class="stats">
+
+</aside>
+
+<div class="user-profile">
 
 </div>
 
-<div id="post">
-  <select id="serverID" name="serverID">
-    {{#each servers}}
-      <option value="{{this.id}}">{{this.name}}</option>
-    {{/each}}
-  </select>
-  <select id="channelID" name="channelID">
-    {{#each channels}}
-      <option value="{{this.id}}">{{this.name}}</option>
-    {{/each}}
-  </select>
-  <input id="text" type="text" name="text" placeholder="Type your message">
-  <a href="#!" class="btn send-btn">send</a>
+<div class="user-input">
+  <div class="selection">
+    <div class="option selection--server">
+      <select name="serverId" id="serverId">
+        {{#each servers}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="option selection--channel">
+      <select name="channelId" id="channelId">
+        {{#each channels}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
+  <div class="input-bar">
+    <input type="text" id="input" name="input" placeholder="Type something">
+  </div>
+
+  <div class="btn-group">
+    <a href="#!" class="btn send-btn">send</a>
+  </div>
 </div>
-
-<script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-  var socket = io();
-
-  // on select server get channels
-  $('#serverID').on('change', function(e) {
-    let serverID = $('#serverID').val();
-    console.log(serverID);
-
-    let post_data = {
-      'serverID': serverID.toString()
-    }
-    $.ajax({
-      crossDomain: true,
-      method: 'POST',
-      url: '/getServer',
-      async: true,
-      data: post_data,
-      error: (e) => {
-        console.error(e);
-      }
-    }).done((data) => {
-      // console.log(data);
-      $('#channelID option').remove();
-      for (var i = 0; i < data.length; i++) {
-        console.log(data[i].id);
-        $('#channelID').append(`<option value="${data[i].id}">${data[i].name}</option>`);
-      }
-    });
-  });
-
-  // send message
-  $('.send-btn').on('click', function(e) {
-    e.preventDefault();
-
-    socket.emit('chat message', {message: $('#text').val(), serverID: $('#serverID').val(), channelID: $('#channelID').val()});
-    channelID
-    $('#m').val('');
-    return false;
-  });
-
-
-
-  // testing
-  socket.on('some event', () => {
-    console.log('asd');
-  });
-
-  socket.on('discord message', (msg) => {
-    console.log('message sent in discord!!');
-    console.log(`message: ${msg}`);
-    $('#chat').append()
-  });
-</script>
