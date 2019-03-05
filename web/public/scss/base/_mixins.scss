@@ -70,7 +70,7 @@ $breakpoints: (
 
 
 
-@mixin scrollbar($size: 6px, $thumbColor: $main, $trackColor: $shade, $borderRadius: 3px) {
+@mixin scrollbar($size: 6px, $thumbColor: darken($main, 2%), $trackColor: darken($shade, 5%), $borderRadius: 3px) {
 
   &::-webkit-scrollbar {
     width: $size;

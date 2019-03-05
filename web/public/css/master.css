@@ -357,7 +357,7 @@ header {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
   border-bottom: 1px solid #202225; }
   header .site-title {
     color: #b3b5b8;
@@ -497,7 +497,7 @@ aside.sidebar {
 
 main {
   background: #36393E;
-  padding: 2rem;
+  padding-top: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -507,7 +507,8 @@ main {
   flex-direction: column;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
-  justify-content: flex-end; }
+  justify-content: flex-end;
+  max-height: calc(100vh - 7rem); }
   main .chat {
     width: 100%;
     display: -webkit-box;
@@ -517,9 +518,29 @@ main {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end; }
+    overflow: auto;
+    max-height: 100%;
+    padding: 1rem; }
+    main .chat::-webkit-scrollbar {
+      width: 6px;
+      height: 6px; }
+      main .chat::-webkit-scrollbar-button {
+        width: 0px;
+        height: 0px; }
+      main .chat::-webkit-scrollbar-thumb {
+        background: #313439;
+        border: 0px none #ffffff;
+        border-radius: 3px; }
+        main .chat::-webkit-scrollbar-thumb:hover {
+          background: #3d4146; }
+        main .chat::-webkit-scrollbar-thumb:active {
+          background: #25272b; }
+      main .chat::-webkit-scrollbar-track {
+        background: #242629;
+        border: 0px none #ffffff;
+        border-radius: 0; }
+      main .chat::-webkit-scrollbar-corner {
+        background: transparent; }
   main .message {
     background: #303236;
     border-radius: 5px;
@@ -537,13 +558,21 @@ main {
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
-    margin-top: 1rem; }
+    margin-top: 1rem;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
+    main .message:first-child {
+      margin-top: auto; }
     main .message__details {
       font-size: .6rem;
       color: #727479;
       margin-bottom: .5rem; }
+    main .message__author {
+      color: #2ecc71; }
     main .message__channel {
       color: #EF3340; }
+      main .message__channel--receive {
+        color: #2ecc71; }
 
 aside.stats {
   background: #2b2d31; }
@@ -563,7 +592,7 @@ aside.stats {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0 2rem; }
+  padding: 0 1rem; }
   .user-input > div + div {
     margin-left: 2rem; }
   .user-input .selection {

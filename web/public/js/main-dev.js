@@ -8,6 +8,16 @@
 //@prepros-append pages/index.js
 
 
+// scroll messages
+var chat = $('#chat');
+var scrollMessages = function scrollMessages() {
+  var scrollHeight = chat[0].scrollHeight;
+  TweenLite.to(chat, 2, {
+    scrollTo: scrollHeight,
+    ease: Power2.easeOut
+  });
+};
+
 // Console Badge =)
 $(function () {
   var t = navigator.userAgent.toLowerCase();
@@ -105,6 +115,7 @@ function sendMessage() {
   $('#chat').append(message);
   // channelId
   $('#input').val('');
+  scrollMessages();
   return false;
 }
 
@@ -118,11 +129,11 @@ socket.on('status update', function (data) {
 
 // testing
 socket.on('some event', function () {
-  console.log('asd');
+  // console.log('asd');
 });
 
-socket.on('discord message', function (msg) {
-  console.log('message sent in discord!!');
-  console.log("message: " + msg);
-  $('#chat').append();
+socket.on('discord message', function (data) {
+  var message = "\n  <div class=\"message\">\n    <div class=\"message__details\"><span class=\"message__author\">" + data.author + "<span> @ <span class=\"message__channel--receive\">" + data.server + " : " + data.channel + "</span></div>\n    <div class=\"message__text\">\n      " + data.message + "\n    </div>\n  </div>\n  ";
+  $('#chat').append(message);
+  scrollMessages();
 });

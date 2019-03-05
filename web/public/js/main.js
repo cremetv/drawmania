@@ -6,7 +6,15 @@
 //@prepros-append pages/index.js
 
 
-
+// scroll messages
+const chat = $('#chat');
+const scrollMessages = () => {
+  let scrollHeight = chat[0].scrollHeight;
+  TweenLite.to(chat, 2, {
+		scrollTo: scrollHeight,
+		ease:Power2.easeOut
+	});
+}
 
 // Console Badge =)
 $(function() {

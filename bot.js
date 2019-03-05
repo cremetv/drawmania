@@ -93,7 +93,7 @@ io.sockets.on('connection', (socket) => {
     }
 
     // emit to everyone
-    io.emit('some event', { for: 'everyone' });
+    // io.emit('some event', { for: 'everyone' });
 
   });
 
@@ -104,7 +104,8 @@ io.sockets.on('connection', (socket) => {
 });
 
 client.on("message", async message => {
-  io.emit('discord message', message.content);
+  if (message.author.bot) return;
+  io.emit('discord message', {message: message.content, author: message.author.username, server: message.channel.guild.name, channel: message.channel.name});
 
   // if someone gets mentioned
   // if (message.mentions.users.first()) {

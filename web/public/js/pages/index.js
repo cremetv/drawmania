@@ -89,6 +89,7 @@ function sendMessage() {
   $('#chat').append(message);
   // channelId
   $('#input').val('');
+  scrollMessages();
   return false;
 }
 
@@ -102,11 +103,18 @@ socket.on('status update', (data) => {
 
 // testing
 socket.on('some event', () => {
-  console.log('asd');
+  // console.log('asd');
 });
 
-socket.on('discord message', (msg) => {
-  console.log('message sent in discord!!');
-  console.log(`message: ${msg}`);
-  $('#chat').append()
+socket.on('discord message', (data) => {
+  let message = `
+  <div class="message">
+    <div class="message__details"><span class="message__author">${data.author}<span> @ <span class="message__channel--receive">${data.server} : ${data.channel}</span></div>
+    <div class="message__text">
+      ${data.message}
+    </div>
+  </div>
+  `;
+  $('#chat').append(message);
+  scrollMessages();
 });
