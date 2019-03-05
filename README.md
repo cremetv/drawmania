@@ -29,9 +29,6 @@ npm install
 - webinterface
 - ...
 
-- [License](#license)
-- [Links](#links)
-
 
 ## License
 
