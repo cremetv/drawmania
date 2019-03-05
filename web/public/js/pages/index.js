@@ -30,12 +30,32 @@ $('#serverId').on('change', function(e) {
 // send message
 $('.send-btn').on('click', function(e) {
   e.preventDefault();
-
-  socket.emit('chat message', {message: $('#input').val(), serverId: $('#serverId').val(), channelId: $('#channelId').val()});
-  // channelId
-  $('#m').val('');
-  return false;
+  sendMessage();
 });
+
+$('#input').on('keyup', function(e) {
+  var key = e.which;
+
+  if(key === 13) {
+    sendMessage();
+  }
+});
+
+function sendMessage() {
+  socket.emit('chat message', {message: $('#input').val(), serverId: $('#serverId').val(), channelId: $('#channelId').val()});
+  let message = `
+  <div class="message">
+    <div class="message__details">sent to --> <span class="message__channel">${$('#serverId option:selected').text()} : ${$('#channelId option:selected').text()}</span></div>
+    <div class="message__text">
+      ${$('#input').val()}
+    </div>
+  </div>
+  `;
+  $('#chat').append(message);
+  // channelId
+  $('#input').val('');
+  return false;
+}
 
 
 
