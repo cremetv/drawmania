@@ -20,62 +20,6 @@ const logcolor = '\x1b[46m\x1b[30m%s\x1b[0m';
 /*
 * Websocket
 */
-// const WS = require('./web/web');
-// const web = new WS(5665, client);
-
-// const express = require('express');
-// const http = require('http').Server(express);
-// const socket = require('socket.io')(http);
-// const hbs = require('express-handlebars');
-// const bodyParser = require('body-parser');
-// const path = require('path');
-//
-// const app = express();
-// app.engine('hbs', hbs({
-//   extname: 'hbs',
-//   defaultLayout: 'layout',
-//   layoutsDir: `${__dirname}/web/layouts`
-// }));
-// app.set('views', path.join(__dirname, 'web/views'));
-// app.set('view engine', 'hbs');
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-//
-// app.get('/', (req, res) => {
-//   let chans = [];
-//   client.guilds.first().channels
-//   .filter(c => c.type == 'text')
-//   .forEach(c => {
-//     chans.push({id: c.id, name: c.name});
-//   });
-//
-//   res.render('index', {
-//     title: 'Welcome',
-//     channels: chans
-//   });
-// });
-//
-// // socket.on('connection', function(socket){
-// //   console.log('a user connected');
-// // });
-//
-// // http.listen(3000, () => {
-// //   console.log(`Websocket listening on 3000`);
-// // });
-// const server = http.Server(app).listen(app.get('port'), function(){
-//   console.log("Express server listening on port " + app.get('port'));
-// });
-//
-// const io = socket.listen(server);
-// io.sockets.on('connection', function () {
-//   console.log('hello world im a hot socket');
-// });
-//
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-// });
-
 const socket = require('socket.io')
 const express = require('express');
 const http = require('http');
@@ -91,7 +35,7 @@ app.engine('hbs', hbs({
 }));
 app.set('views', path.join(__dirname, 'web/views'));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/web/public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -117,15 +61,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/getServer', (req, res) => {
+  // get all channels for the selected server
   let chans = [];
-  let serverID = req.body.serverID;
-  let server = client.guilds.get(serverID);
+  let server = client.guilds.get(req.body.serverID);
   let serverChannels = server.channels.filter(c => c.type == 'text')
   .forEach(c => {
     chans.push({id: c.id, name: c.name});
   });
+  // send back the data
   res.json(chans);
-  // io.emit('server select', {chans: chans});
 });
 
 const server = http.createServer(app).listen(3000, () => {
@@ -162,17 +106,7 @@ io.sockets.on('connection', (socket) => {
 });
 
 client.on("message", async message => {
-  console.log('XXXX MESSAGE XXXX');
   io.emit('discord message', message.content);
-
-  // if (message.mentions.users.first()) {
-  //   console.log('someone was mentioned');
-  //   console.log(message.content);
-  //   console.log('--------');
-  //   console.log(message.mentions.users.first());
-  //   let msg = message.content.replace(`<@${message.mentions.users.first().id}>`, '');
-  //   console.log(msg);
-  // }
 
   if (message.mentions.users.first()) {
     let msg = message.content;
