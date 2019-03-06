@@ -1,7 +1,7 @@
 # drawmania
 Discord Bot WIP
 
-Was a bot for drawing contests. Is now a allround bot WIP.
+Previously a bot for drawing contests. Now a allround bot (WIP).
 
 ## Table of content
 
