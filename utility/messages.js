@@ -41,6 +41,9 @@ module.exports = {
     } else if (msgC.includes('lol')) {
       message.channel.send('lul');
 
+    } else if (msgC.includes('vsauce')) {
+      let answers = ['michael here', 'sauce me daddy', 'heyyyy', 'saucy', 'ugh', 'reeeee', 'HeY VSaUcE mIChAEl HeRE!1', 'sauuuce', 'eat the sauce', 'vsauce gud'];
+      message.channel.send(answers[Math.floor(Math.random() * answers.length)]);
     }
   }
 }

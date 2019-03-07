@@ -304,8 +304,10 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 client.on("message", async message => {
   // functions in utility/messages
   // TODO: FIX xp/lvl system something is broke
-	msg.messageHandler(message);
-	msg.directAnswers(message);
+  if (!message.author.bot) {
+    msg.messageHandler(message);
+  	msg.directAnswers(message);
+  }
 
 	// init commands
 	let messageArray = message.content.split(/\s+/g);
