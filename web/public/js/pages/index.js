@@ -117,4 +117,29 @@ socket.on('discord message', (data) => {
   `;
   $('#chat').append(message);
   scrollMessages();
+
+  // update stats
+  const statMsg = $('.stat--messages');
+  let messageCount = parseInt(statMsg.find('.stat__value').html());
+  statMsg.find('.stat__value').html(messageCount++);
+  // highlight the updated stat container
+  testUpdateStat(statMsg);
 });
+
+// highlight the updated stat container
+const testUpdateStat = (el) => {
+  const tl = new TimelineMax();
+
+  tl.set(el, {
+    boxShadow: 'inset 0px 0 0 0 rgba(46, 204, 113, 1)',
+  });
+  tl.to(el, .2, {
+    boxShadow: 'inset 5px 0 0 0 rgba(46, 204, 113, 1)',
+    ease: Power4.easeInOut
+  });
+  tl.to(el, .8, {
+    delay: 1,
+    boxShadow: 'inset 5px 0 0 0 rgba(46, 204, 113, 0)',
+    ease: Power4.easeInOut
+  });
+}

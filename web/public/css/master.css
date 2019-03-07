@@ -97,7 +97,7 @@
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: 400;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
@@ -614,7 +614,39 @@ main {
         color: #2ecc71; }
 
 aside.stats {
-  background: #2b2d31; }
+  background: #2b2d31;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.stat {
+  width: 100%;
+  background: #202225;
+  padding: 1rem;
+  -webkit-box-shadow: inset 0 0 0 0 #303236;
+  box-shadow: inset 0 0 0 0 #303236; }
+  .stat + .stat {
+    margin-top: 1rem; }
+  .stat__title {
+    color: #7F8186;
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: .5rem; }
+  .stat__value {
+    color: #727479;
+    font-size: .8rem;
+    font-weight: 400; }
+  .stat--error {
+    -webkit-box-shadow: inset 0.25rem 0 0 0 #e74c3c;
+    box-shadow: inset 0.25rem 0 0 0 #e74c3c; }
+  .stat--success {
+    -webkit-box-shadow: inset 0.25rem 0 0 0 #2ecc71;
+    box-shadow: inset 0.25rem 0 0 0 #2ecc71; }
 
 .user-input {
   background: #303236;

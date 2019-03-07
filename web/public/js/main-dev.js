@@ -136,4 +136,29 @@ socket.on('discord message', function (data) {
   var message = "\n  <div class=\"message\">\n    <div class=\"message__details\"><span class=\"message__author\">" + data.author + "<span> @ <span class=\"message__channel--receive\">" + data.server + " : " + data.channel + "</span></div>\n    <div class=\"message__text\">\n      " + data.message + "\n    </div>\n  </div>\n  ";
   $('#chat').append(message);
   scrollMessages();
+
+  // update stats
+  var statMsg = $('.stat--messages');
+  var messageCount = parseInt(statMsg.find('.stat__value').html());
+  statMsg.find('.stat__value').html(messageCount++);
+  // highlight the updated stat container
+  testUpdateStat(statMsg);
 });
+
+// highlight the updated stat container
+var testUpdateStat = function testUpdateStat(el) {
+  var tl = new TimelineMax();
+
+  tl.set(el, {
+    boxShadow: 'inset 0px 0 0 0 rgba(46, 204, 113, 1)'
+  });
+  tl.to(el, .2, {
+    boxShadow: 'inset 5px 0 0 0 rgba(46, 204, 113, 1)',
+    ease: Power4.easeInOut
+  });
+  tl.to(el, .8, {
+    delay: 1,
+    boxShadow: 'inset 5px 0 0 0 rgba(46, 204, 113, 0)',
+    ease: Power4.easeInOut
+  });
+};
