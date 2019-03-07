@@ -2,7 +2,6 @@ const botsettings = require("./botsettings.json");
 const Discord = require("discord.js");
 const fs = require("fs");
 const ffmpeg = require("ffmpeg");
-// const mysql = require("mysql");
 const Database = require('./utility/db.js');
 const config = module.require('./config.js');
 
@@ -10,16 +9,19 @@ const config = module.require('./config.js');
 const msg = require('./utility/messages.js');
 const items = require('./utility/items.js');
 
+// bot prefix
 const prefix = botsettings.prefix;
 
+// create bot
 const client = new Discord.Client({disableEveryone: true});
 client.commands = new Discord.Collection();
 
 const logcolor = '\x1b[46m\x1b[30m%s\x1b[0m';
 
-/*
+
+/****************
 * Websocket
-*/
+****************/
 const socket = require('socket.io')
 const express = require('express');
 const http = require('http');
@@ -39,14 +41,24 @@ app.use(express.static(path.join(__dirname, '/web/public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+const server = http.createServer(app).listen(3000, () => {
+  console.log(`Express server listening on port 3000`);
+});
+const io = socket.listen(server);
+
+
+// index of webinterface
 app.get('/', (req, res) => {
   let servers = [];
   let chans = [];
 
+  // get all server
   client.guilds.forEach(s => {
     servers.push({id: s.id, name: s.name, icon: s.icon});
   });
 
+  // get all text channels of the first server
   client.guilds.first().channels
   .filter(c => c.type == 'text')
   .forEach(c => {
@@ -73,65 +85,48 @@ app.post('/getServer', (req, res) => {
   res.json(chans);
 });
 
-const server = http.createServer(app).listen(3000, () => {
-  console.log(`Express server listening on port 3000`);
-});
-const io = socket.listen(server);
-
+// when user connect to webinterface
 io.sockets.on('connection', (socket) => {
-  // broadcast to everyone except the connected one
-  socket.broadcast.emit('hi');
-  console.log('hello world im a hot socket');
+  console.log('user connected');
 
   // on chat message from site
   socket.on('chat message', (data) => {
     let server = client.guilds.get(data.serverId);
     let channel = server.channels.get(data.channelId);
 
+    // send message from webinterface to discord
     if (server && channel) {
       channel.send(data.message);
     }
-
-    // emit to everyone
-    // io.emit('some event', { for: 'everyone' });
-
   });
 
+  // when user disconnects from webinterface
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
 
 });
 
+// discord message to webinterface
 client.on("message", async message => {
   if (message.author.bot) return;
+
+  // send message to webinterface
   io.emit('discord message', {message: message.content, author: message.author.username, server: message.channel.guild.name, channel: message.channel.name});
-
-  // if someone gets mentioned
-  // if (message.mentions.users.first()) {
-  //   let msg = message.content;
-  //
-  //   message.mentions.users.forEach(u => {
-  //     msg = msg.replace(`<@${u.id}>`, '').replace(/ +(?= )/g,'');
-  //   });
-  //
-  //   console.log(msg);
-  // }
-
 });
 
 
-/*
+/****************
 * Music
-*/
+****************/
 global.servers = {};
+
 
 /****************
 * Database Connection
 ****************/
-
 const db = new Database(config);
-db.execute = function( config, callback ) {
+db.execute = ( config, callback ) => {
     const database = new Database( config );
     return callback( database ).then(
         result => database.close().then( () => result ),
@@ -169,6 +164,7 @@ client.on('ready', async () => {
 	console.log('\x1b[32m%s\x1b[0m', `Bot is ready! ${client.user.username}`);
 	client.user.setGame(`beep boop`, "https://ice-creme.de");
 
+  // send status to webinterface
   io.emit('status update', { status: 'online' });
 
 	// generate invitelink
@@ -182,30 +178,30 @@ client.on('ready', async () => {
 
 
 	// drop items
-	function placeItemInterval() {
-		// 1200000 = 20min
-		// 3600000 = 60min
+	const placeItemInterval = () => {
 		let delay = getRandomInt(1200000, 3600000)
-		// let delay = getRandomInt(1000, 8000);
+
 		console.log(`time to next item drop: ${delay}ms`);
+
 		placeItem();
 		setTimeout(placeItemInterval, delay);
 	}
+  // currently disabled
 	// placeItemInterval();
 
-	function getRandomInt(min, max) {
+	const getRandomInt = (min, max) => {
 	  min = Math.ceil(min);
 	  max = Math.floor(max);
 	  return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	function placeItem() {
-	  const rand = function(min, max) {
+	const placeItem = () => {
+	  const rand = (min, max) => {
 	    return Math.random() * (max - min) + min;
 	  }
 
-	  const getRandomItem = function(list, weight) {
-	    let total_weight = weight.reduce(function(prev, cur, i, arr) {
+	  const getRandomItem = (list, weight) => {
+	    let total_weight = weight.reduce((prev, cur, i, arr) => {
 	      return prev + cur;
 	    });
 
@@ -234,7 +230,7 @@ client.on('ready', async () => {
 	  db.execute(config,
 	    database => database.query(`SELECT * FROM items`)
 	    .then(rows => {
-	      rows.forEach(function(row) {
+	      rows.forEach((row) => {
 	        itemname = row.itemname;
 	        drop = row.dropchance;
 	        value = row.value;
@@ -270,9 +266,9 @@ client.on('ready', async () => {
 /****************
 * Guild Create
 ****************/
-client.on('guildCreate', guild => {
-	console.log('guild create');
-});
+// client.on('guildCreate', guild => {
+// 	console.log('guild create');
+// });
 
 
 /****************
@@ -280,6 +276,7 @@ client.on('guildCreate', guild => {
 ****************/
 client.on('guildMemberAdd', member => {
 	console.log('someone joined the server');
+  // TODO: write to DB
 });
 
 
@@ -288,6 +285,7 @@ client.on('guildMemberAdd', member => {
 ****************/
 client.on('guildMemberRemove', member => {
 	console.log('someone left the server');
+  // TODO: update DB
 });
 
 
@@ -296,6 +294,7 @@ client.on('guildMemberRemove', member => {
 ****************/
 client.on('guildMemberUpdate', (oldMember, newMember) => {
 	console.log('updated member');
+  // TODO: update DB
 });
 
 
@@ -303,6 +302,8 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 * Message
 ****************/
 client.on("message", async message => {
+  // functions in utility/messages
+  // TODO: FIX xp/lvl system something is broke
 	msg.messageHandler(message);
 	msg.directAnswers(message);
 
@@ -321,10 +322,12 @@ client.on("message", async message => {
 /****************
 * Reaction Add
 ****************/
+// item pickup
 client.on("messageReactionAdd", async (messageReaction, user) => {
 	items.itemPickup(messageReaction, user);
 });
 
+// music reactions
 client.on('messageReactionAdd', (messageReaction, user) => {
   if (user.bot) return;
 

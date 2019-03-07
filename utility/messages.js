@@ -1,7 +1,7 @@
 const Database = require('./db.js');
 const config = module.require('./../config.js');
 const db = new Database(config);
-db.execute = function( config, callback ) {
+db.execute = ( config, callback ) => {
     const database = new Database( config );
     return callback( database ).then(
         result => database.close().then( () => result ),
@@ -11,15 +11,15 @@ db.execute = function( config, callback ) {
 
 
 module.exports = {
-  messageHandler: function (message) {
+  messageHandler: (message) => {
     if(message.author.bot) return;
     if(message.channel.type === 'dm') return;
 
     // add xp
     addXp(message);
   },
-  directAnswers: function (message) {
-    // write direct Answers to chat messages withour prefix
+  directAnswers: (message) => {
+    // write direct Answers to chat messages without prefix
     let msgC = message.content.toLowerCase();
 
     if (msgC.includes('owo') || msgC.includes('uwu')) {
@@ -48,7 +48,7 @@ module.exports = {
 
 
 
-function addXp(message) {
+const addXp = (message) => {
 
   let currentXp, currentLvl, lvl, messages;
 
@@ -95,6 +95,6 @@ function addXp(message) {
 }
 
 
-function generateXp(min, max) {
+const generateXp = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
