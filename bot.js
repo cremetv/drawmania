@@ -302,11 +302,29 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 * Message
 ****************/
 client.on("message", async message => {
+  // let msg = message;
+  // if(msg.content){
+  //   console.log('message has content');
+  //   let filter = m => m.author.id === msg.author.id;
+  //   message.channel.awaitMessages(filter, {max: 1})
+  //   .then(msg2 => {
+  //     console.log('message awaited');
+  //     if(msg.content === msg2.first().content){
+  //       console.log('same content same author');
+  //       message.delete();
+  //     }
+  //   })
+  //   .catch(collected => console.log(collected.size));
+  // }
+
+
+
+
   // functions in utility/messages
   // TODO: FIX xp/lvl system something is broke
   if (!message.author.bot) {
-    msg.messageHandler(message);
-  	msg.directAnswers(message);
+    // msg.messageHandler(message);
+  	// msg.directAnswers(message);
   }
 
 	// init commands
