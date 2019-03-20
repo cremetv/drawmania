@@ -304,17 +304,18 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 client.on("message", async message => {
   // let msg = message;
   // if(msg.content){
-  //   console.log('message has content');
+  //
   //   let filter = m => m.author.id === msg.author.id;
-  //   message.channel.awaitMessages(filter, {max: 1})
+  //
+  //   message.channel.awaitMessages(filter, {max: 1, time: 10000})
   //   .then(msg2 => {
-  //     console.log('message awaited');
-  //     if(msg.content === msg2.first().content){
-  //       console.log('same content same author');
+  //
+  //     if(msg2 && msg.content === msg2.first().content){
   //       message.delete();
   //     }
+  //
   //   })
-  //   .catch(collected => console.log(collected.size));
+  //   .catch(c => {return});
   // }
 
 
