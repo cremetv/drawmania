@@ -302,15 +302,14 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 * Message
 ****************/
 client.on("message", async message => {
-  // let msg = message;
-  // if(msg.content){
+  // if(message.content){
   //
   //   let filter = m => m.author.id === msg.author.id;
   //
   //   message.channel.awaitMessages(filter, {max: 1, time: 10000})
   //   .then(msg2 => {
   //
-  //     if(msg2 && msg.content === msg2.first().content){
+  //     if(msg2 && message.content === msg2.first().content){
   //       message.delete();
   //     }
   //
@@ -324,8 +323,8 @@ client.on("message", async message => {
   // functions in utility/messages
   // TODO: FIX xp/lvl system something is broke
   if (!message.author.bot) {
-    // msg.messageHandler(message);
-  	// msg.directAnswers(message);
+    msg.messageHandler(message);
+  	msg.directAnswers(message);
   }
 
 	// init commands
