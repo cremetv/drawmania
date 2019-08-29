@@ -9,21 +9,21 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "deep-extend": "^0.6.0",
-    "discord.js": "^11.2.1",
-    "express": "^4.16.4",
-    "express-handlebars": "^3.0.2",
+    "discord.js": "^11.5.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
     "ffmpeg": "0.0.4",
-    "mysql": "^2.15.0",
-    "node-fetch": "^2.3.0",
-    "nodemon": "^1.18.10",
+    "mysql": "^2.17.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.1",
     "opusscript": "0.0.6",
     "randomatic": "^3.1.1",
     "snekfetch": "^4.0.4",
     "socket.io": "^2.2.0",
-    "webhook-discord": "^3.1.2",
-    "ytdl-core": "^0.29.1"
+    "webhook-discord": "^3.2.0",
+    "ytdl-core": "^0.29.5"
   },
   "engines": {
     "node": "10.15.1"
