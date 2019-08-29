@@ -13,13 +13,13 @@ module.exports.run = async(bot, message, args) => {
 	const m = d.getUTCMonth() + 1;
 	const currTheme = phrase[n];
 
-	if(m != '12') return message.channel.send('not december yet');
+	if(m != '5') return message.channel.send('not december yet');
 	if(advDay === "list") {
 		message.channel.send(phrase);
 	} else if(advDay <= 24) {
 		if(advDay <= n) {
 			let advembed = new Discord.RichEmbed()
-				.setAuthor('Drawing Adventskalender')
+				.setAuthor('Drawing advent Calendar')
 				.setTitle(advDay + ' Dezember')
 				.setDescription(output)
 				.setColor('AQUA')
