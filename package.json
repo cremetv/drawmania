@@ -16,7 +16,7 @@
     "express-handlebars": "^3.1.0",
     "ffmpeg": "0.0.4",
     "mysql": "^2.17.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "nodemon": "^1.19.1",
     "opusscript": "0.0.6",
     "randomatic": "^3.1.1",
