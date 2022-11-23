@@ -21,7 +21,7 @@
     "opusscript": "0.0.6",
     "randomatic": "^3.1.1",
     "snekfetch": "^4.0.4",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "webhook-discord": "^3.2.0",
     "ytdl-core": "^0.29.5"
   },
